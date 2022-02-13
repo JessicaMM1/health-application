@@ -17,6 +17,7 @@ from devices import deviceInfo, read_data, status_code
 
 status = status_code()
 
+
 # Test 1 - device keys
 def test_keys_auth():
     t1 = deviceInfo("thermometer", "thermo1", "C")
@@ -28,7 +29,7 @@ def test_keys_auth():
 
 
 # Test 2 - Wrong type of device
-def test_keys_auth():
+def test_device_type():
     t2 = deviceInfo("bmi_monitor", "BMI_1")
     read_data("a1b2c3", t2, status)
     expected = ['Invalid device type']

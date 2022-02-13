@@ -17,10 +17,12 @@ devices = (
             "glucose_meter", 
             "oximeter"
             )
-    
+
+
 class status_code:
     success = True 
     error = []
+
 
 class deviceInfo:
 
@@ -73,13 +75,11 @@ def read_data(key, device, status):
         status.error.append("Invalid measurements")
 
 
-
-t = deviceInfo("thermometer", "t1", "C")
-print(t.type, t.name, t.scale)
-t.set_measurement(111)
-print(t.measurement)
-print(t.measurementsTime)
-status = status_code()
-read_data("a1b2c3", t, status)
-print(status.success, status.error)
-
+# t = deviceInfo("thermometer", "t1", "C")
+# print(t.type, t.name, t.scale)
+# t.set_measurement(111)
+# print(t.measurement)
+# print(t.measurementsTime)
+# status = status_code()
+# read_data("a1b2c3", t, status)
+# print(status.success, status.error)
