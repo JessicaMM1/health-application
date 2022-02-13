@@ -1,6 +1,4 @@
 # Device interface skeleton - Celsius and Farenheit
-import sample
-
 from datetime import datetime
 now = datetime.now()
 
