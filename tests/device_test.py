@@ -71,6 +71,7 @@ def test_multiple_errors():
 
     assert expected == s5.error
 
+
 # Test - wrong scales for device type
 def test_thermo_scales():
     s6 = status_code()
