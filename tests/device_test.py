@@ -68,7 +68,7 @@ def test_multiple_errors():
     assert expected == status.error
 
 
-# Test - wront scales
+# Test - wrong scales
 def test_thermo_scales():
     t6 = deviceInfo("thermometer", "t5", "lbs")
     t6.set_measurements(200)

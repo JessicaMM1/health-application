@@ -1,4 +1,5 @@
 # Device interface skeleton - Celsius and Farenheit
+import sample
 
 from datetime import datetime
 now = datetime.now()
@@ -26,14 +27,16 @@ class status_code:
 
 class deviceInfo:
 
-    def __init__(self, type, name, scale) -> None:
-        self.type = type
-        self.name = name
+    # def __init__(self, type, name, scale) -> None:
+    def __init__(self, *args) -> None:
+        self.type = args[0]
+        self.name = args[1]
 
         # Should device check be here?
         
-        if scale == "C" or scale == "F":
-            self.scale = scale
+        if isinstance(args[2],str):
+            if args[2] == "C" or args[2]== "F":
+                self.scale = args[2]
         else:
             self.scale = None
 
@@ -41,7 +44,7 @@ class deviceInfo:
     # name = ""
     serialNumber = ""
 
-    def set_measurement(self,measurement):
+    def set_measurements(self,measurement):
         self.measurement = measurement
         self.measurementsTime = now.strftime("%d/%m/%Y %H:%M:%S")
     
