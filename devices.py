@@ -57,7 +57,7 @@ def check_range(device):
 
     print(">> check_range ", device.type, device.scale, device.measurement)
 
-    if device.measurement == None:
+    if device.measurement is None:
         return False
     elif device.type == "thermometer":
         if device.scale == "C" and device.measurement >= 45:
