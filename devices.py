@@ -33,9 +33,9 @@ class deviceInfo:
         self.name = args[1]
 
         # Should device check be here?
-        
+
         if isinstance(args[2],str):
-            if args[2] == "C" or args[2]== "F":
+            if args[2] == "C" or args[2] == "F":
                 self.scale = args[2]
         else:
             self.scale = None
@@ -58,7 +58,6 @@ def check_range(device):
             return False
     
     return True
-            
 
 
 def read_data(key, device, status):
