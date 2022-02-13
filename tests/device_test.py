@@ -20,6 +20,7 @@ from devices import deviceInfo, read_data, status_code
 def test_keys_auth():
     s1 = status_code()
     t1 = deviceInfo("thermometer", "thermo1", "C")
+    t1.set_measurements(36)
     read_data("12345", t1, s1)
     expected = ['Invalid key']
     # captured = capsys.readouterr()
@@ -31,6 +32,7 @@ def test_keys_auth():
 def test_device_type():
     s2 = status_code()
     t2 = deviceInfo("bmi_monitor", "BMI_1")
+    t2.set_measurements(100)
     read_data("a1b2c3", t2, s2)
     expected = ['Invalid device type']
     # captured = capsys.readouterr()
@@ -66,7 +68,7 @@ def test_multiple_errors():
     s5 = status_code()
     t5 = deviceInfo("bmi_monitor", "BMI_1")
     read_data("a1b2c3123456", t5, s5)
-    expected = ['Invalid key', 'Invalid device type']
+    expected = ['Invalid key', 'Invalid device type', 'Invalid measurements']
     # captured = capsys.readouterr()
 
     assert expected == s5.error
@@ -75,7 +77,7 @@ def test_multiple_errors():
 # Test - wrong scales for device type
 def test_thermo_scales():
     s6 = status_code()
-    t6 = deviceInfo("thermometer", "t5", "lbs")
+    t6 = deviceInfo("thermometer", "thermoScale", "lbs")
     t6.set_measurements(200)
     read_data("a1b2c3", t6, s6.error)
     expected = ['Invalid measurements']
