@@ -26,6 +26,25 @@ The goal is to provide interfaces to third-party medical devices to feed measure
 
 ### Modules
 - Device 
+    - To create a device `deviceInfo("device_type", "device_name", *"units"*, *"serial_number"*)
+
+    | Name | Type | Options |
+    |------|------| ------- |
+    | device_type | String | see code block |
+    | device_name | String | |
+    | units (optional) | String | see code block |
+    | serial number (optional) | Integer | |
+
+    ``` 
+    {
+        "thermometer": ("C", "F"), 
+        "bp_monitor": ("mmHg", "bpm"), 
+        "w_scale": ("kgs", "lbs"), 
+        "glucose_meter": "mg/dL", 
+        "oximeter": ("SP02", "bpm"),
+    }
+    ```
+
 - Calendar
 - Alerts
 - Communications
