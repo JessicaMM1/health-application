@@ -26,9 +26,9 @@ The goal is to provide interfaces to third-party medical devices to feed measure
 
 ### Modules
 - Device 
-    - To create a device `deviceInfo("device_type", "device_name", *"units"*, *"serial_number"*)
+    - To create a device `deviceInfo("device_type", "device_name", *"units"*, *"serial_number"*)`
 
-    | Name | Type | Options |
+    | Parameter | Type | Options |
     |------|------| ------- |
     | device_type | String | see code block |
     | device_name | String | |
@@ -44,6 +44,32 @@ The goal is to provide interfaces to third-party medical devices to feed measure
         "oximeter": ("SP02", "bpm"),
     }
     ```
+    - To add device measurements `set_measurements(measurement)`
+
+    | Parameter | Type |
+    |------|------| 
+    | measurement | Integer |
+
+    - To read data `read_data(key, device, status)`
+
+    | Parameter | Type |
+    |------|------| 
+    | key | String |
+    | device | deviceInfo (created previously) |
+    | status | status_code (created previously)| 
+
+    - Status code `status_code()`
+
+    | Member | Type |
+    | ------ | ------ | 
+    | success | Bool |
+    | error | List of strings |
+    
+        - Error messages:
+            - Invalid key
+            - Invalid device type
+            - Invalid units for device
+            - Invalid measurements
 
 - Calendar
 - Alerts
