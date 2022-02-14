@@ -9,13 +9,21 @@ keys = [
         "z9x8y7"
         ]
 
-devices = (
-            "thermometer", 
-            "bp_monitor", 
-            "w_scale", 
-            "glucose_meter", 
-            "oximeter"
-            )
+# devices = (
+#             "thermometer", 
+#             "bp_monitor", 
+#             "w_scale", 
+#             "glucose_meter", 
+#             "oximeter"
+#             )
+
+devices = {
+            "thermometer": ("C", "F"), 
+            "bp_monitor": ("mmHg", "bpm"), 
+            "w_scale": ("kgs", "lbs"), 
+            "glucose_meter": "mg/dL", 
+            "oximeter": ("SP02", "bpm"),
+            }
 
 
 class status_code:
@@ -36,10 +44,10 @@ class deviceInfo:
 
         # Check for unit scale (for now is just thermometer C/F)
         if len(args) == 3 and isinstance(args[2], str):
-            if args[2] == "C" or args[2] == "F":
-                self.scale = args[2]
+            # if args[2] == "C" or args[2] == "F":
+            self.unit = args[2]
         else:
-            self.scale = None
+            self.unit = None
 
     # type = ""
     # name = ""
@@ -55,14 +63,14 @@ def check_range(device):
     # Error codes:
     # 0 - no data
 
-    print(">> check_range ", device.type, device.scale, device.measurement)
+    print(">> check_range ", device.type, device.unit, device.measurement)
 
     if device.measurement is None:
         return False
     elif device.type == "thermometer":
-        if device.scale == "C" and device.measurement >= 45:
+        if device.unit == "C" and device.measurement >= 45:
             return False
-        elif device.scale == "F" and device.measurement >= 108.14:
+        elif device.unit == "F" and device.measurement >= 108.14:
             return False
 
     return True
@@ -77,23 +85,21 @@ def read_data(key, device, status):
         status.error.append("Invalid key")
 
     # check device type
-    if device.type not in devices:
+    # print(device.type)
+    valid_device = devices.get(device.type)    # returns device's units 
+
+    # print(valid_device)
+    # if device.type not in devices:
+    if valid_device is None:
         status.success = False
         status.error.append("Invalid device type")
+
+    # check correct units for device
+    if valid_device is not None and device.unit not in valid_device:
+        status.success = False
+        status.error.append("Invalid units for device")
 
     # check measurements range
     if not check_range(device):
         status.success = False
         status.error.append("Invalid measurements")
-
-
-
-
-# t = deviceInfo("thermometer", "t1", "C")
-# print(t.type, t.name, t.scale)
-# t.set_measurement(111)
-# print(t.measurement)
-# print(t.measurementsTime)
-# status = status_code()
-# read_data("a1b2c3", t, status)
-# print(status.success, status.error)
