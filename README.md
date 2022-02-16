@@ -25,8 +25,8 @@ The goal is to provide interfaces to third-party medical devices to feed measure
     - access anonymized data 
 
 ### Modules
-- Device 
-    - To create a device `deviceInfo("device_type", "device_name", *"units"*, *"serial_number"*)`
+#### Device 
+    - To create a device `deviceInfo("device_type", "device_name", "units", "serial_number")`
 
     | Parameter | Type | Options |
     |------|------| ------- |
@@ -65,20 +65,20 @@ The goal is to provide interfaces to third-party medical devices to feed measure
     | success | Bool |
     | error | List of strings |
     
-        - Error messages:
-            - Invalid key
-            - Invalid device type
-            - Invalid units for device
-            - Invalid measurements
+    Error messages:
+    - Invalid key
+    - Invalid device type
+    - Invalid units for device
+    - Invalid measurements
 
-- Calendar
-- Alerts
-- Communications
+#### Calendar
+#### Alerts
+#### Communications
     - Chat 
     - Voice Transcriber
-- Administrative
-- Data Management
-- User Interface
+#### Administrative
+#### Data Management
+#### User Interface
 
 ## Branching Strategy
 Each module is considered a feature. So, the branching strategy is the following:
