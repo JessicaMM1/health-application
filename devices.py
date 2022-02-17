@@ -106,16 +106,16 @@ def check_range(device):
     return True
 
 
-def read_data(key, in_device, status):
+def read_data(key, device, status):
 
     # Add JSON as input
 
-    print("input: ", type(in_device), in_device)
+    print("input: ", type(device), device)
 
     # Convert (deserialize) JSON to dictionary & convert to deviceInfo object:
-    if type(in_device) is str:
+    if type(device) is str:
         try:
-            with open(in_device, "r") as read_file:
+            with open(device, "r") as read_file:
                 data = json.load(read_file)     # dict type
             # print(type(data)) 
             print(data)
@@ -131,7 +131,7 @@ def read_data(key, in_device, status):
         # print(type(device))
         # >>> check json validity
 
-    elif type(in_device) is not deviceInfo:
+    elif type(device) is not deviceInfo:
         status.success = False
         status.error.append("Invalid input")
         return
@@ -171,13 +171,16 @@ def read_data(key, in_device, status):
     return out_json
 
 
-# t = deviceInfo("thermometer", "t1", "C")
+print("----- main ------")
+
+# t = deviceInfo("t1", "thermometer", None, 38, "C")
 # print(t.type, t.name, t.unit)
+
 # t.set_measurements(111)
 # print(t.measurement)
 # print(t.measurementsTime)
 
-# status = status_code()
-# out = read_data("a1b2c3", "device1.json", status)
-# print(status.success, status.error)
-# print(out)
+status = status_code()
+out = read_data("a1b2c3", "device1.json", status)
+print(status.success, status.error)
+print(out)
