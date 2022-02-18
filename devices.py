@@ -190,4 +190,3 @@ def read_data(key, device, status):
 # out = read_data("a1b2c3", "device1.json", status)
 # print(status.success, status.error)
 # print(out)
-

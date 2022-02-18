@@ -89,9 +89,9 @@ def test_thermo_units():
 def test_json(): 
     s7_1 = status_code()
     s7_2 = status_code()
-    t7 = deviceInfo("t123", "thermometer", None, 33, "C")
+    t7 = deviceInfo("thermo1", "thermometer", 12345, 33, "C")
 
-    out_json = read_data("a1b2c3", "device1.json", s7_1)
+    out_dict = read_data("a1b2c3", "device1.json", s7_1)
     out_t7 = read_data("a1b2c3", t7, s7_2)
 
-    assert out_t7 == out_json
+    assert out_t7 == out_dict
