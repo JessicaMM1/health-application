@@ -1,3 +1,5 @@
 flake8
 coverage
 pytest >= 4.0
+flask
+flask_restful
