@@ -11,14 +11,6 @@ keys = [
         "z9x8y7"
         ]
 
-# devices = (
-#             "thermometer", 
-#             "bp_monitor", 
-#             "w_scale", 
-#             "glucose_meter", 
-#             "oximeter"
-#             )
-
 valid_devices = {
             "thermometer": ("C", "F"), 
             "bp_monitor": ("mmHg", "bpm"), 
@@ -28,10 +20,10 @@ valid_devices = {
             }
 
 # deviceInfo = {
-#                 "name": str, *
+#                 "name": str, 
 #                 "type": str, *     Enum: [thermometer, bp_monitor, w_scale, glucose_meter, oximeter]
-#                 "id": int,
-#                 "measurement": [int], 
+#                 "serial_number: int,
+#                 "data": [int], 
 #                 "unit": str, *
 #                 "time_stamp": str
 #               }
@@ -63,21 +55,12 @@ class deviceInfo:
             self.unit = None
     '''
 
-    def __init__(self, name, type, serial_number, measurement, unit) -> None:
+    def __init__(self, name, type, serial_number, data, unit) -> None:
         self.name = name
         self.type = type
         self.serial_number = serial_number
-        self.measurement = measurement
+        self.data = data
         self.unit = unit
-
-
-    # type = ""
-    # name = ""
-    # serialNumber = None
-    # measurement = None
-
-    # Manual input
-
 
     '''
         def set_measurements(self, measurement):
@@ -90,26 +73,44 @@ class deviceInfo:
 
 
 def check_range(device):
-    # Error codes:
-    # 0 - no data
+    # Checks ranges according to device and unit
+    print(">> check_range ", device.type, device.unit, device.data)
 
-    print(">> check_range ", device.type, device.unit, device.measurement)
-
-    if device.measurement is None:
+    if device.data is None or type(device.data) is not int:
         return False
     elif device.type == "thermometer":
-        if device.unit == "C" and device.measurement >= 45:
+        if device.unit == "C" and not 0 <= device.data <= 45:
             return False
-        elif device.unit == "F" and device.measurement >= 108.14:
+        elif device.unit == "F" and not 32 <= device.data <= 108.14:
             return False
 
     return True
 
 
+# def is_json_valid(data, status):
+#     # Checks validity of file -> if dictionary contains all the required fields
+
+#     # type
+#     if "type" not in data:
+#         status.success = False
+#         status.error.append("No device type found")
+
+#     # unit
+#     if "unit" not in data:
+#         status.success = False
+#         status.error.append("No unit found")
+
+#     # data
+#     if "data" not in data:
+#         status.success = False
+#         status.error.append("No data found")
+
+#     return status.success 
+
+
 def read_data(key, device, status):
 
     # Add JSON as input
-
     print("input: ", type(device), device)
 
     # Convert (deserialize) JSON to dictionary & convert to deviceInfo object:
@@ -118,34 +119,36 @@ def read_data(key, device, status):
             with open(device, "r") as read_file:
                 data = json.load(read_file)     # dict type
             # print(type(data)) 
-            print(data)
-            device = deviceInfo(**data)
-            device.set_time()
-            print(device.__dict__)
+            # print(data)
 
+            # if not is_json_valid(data, status):
+            #     # print("not valid")
+            #     return
+                device = deviceInfo(**data)
+        
         except FileNotFoundError as e:
             status.success = False
             status.error.append(e.strerror)
             return 
+        
+        except TypeError:
+            status.error.append("Missing JSON parameter")
+            return
 
         # print(type(device))
-        # >>> check json validity
-
-    elif type(device) is not deviceInfo:
+    '''
+        elif type(device) is not deviceInfo:
         status.success = False
         status.error.append("Invalid input")
         return
-    
-
-    # check key (hardcoded list for now)
-    print(">> key ", key, keys)
+    '''
 
     if key not in keys:
         status.success = False
         status.error.append("Invalid key")
 
     valid_device = valid_devices.get(device.type)    # returns device's units 
-    # print(valid_device)
+    print(valid_device)
 
     # check device type
     if valid_device is None:
@@ -154,7 +157,6 @@ def read_data(key, device, status):
 
     # check correct units for device
     if valid_device is not None and device.unit not in valid_device:
-        print("in check")
         status.success = False
         status.error.append("Invalid units for device")
 
@@ -163,24 +165,29 @@ def read_data(key, device, status):
         status.success = False
         status.error.append("Invalid measurements")
 
+    device.set_time()
     # Return JSON with timestamp 
     # Create (serialize) JSON from deviceInfo object:
-    out_json = json.dumps(device.__dict__, indent=4)
+    # out_json = json.dumps(device.__dict__, indent=4)
+    # print(device.__dict__)
+    # print(out_json)
+
     # print(encode)
     # print(type(encode))
-    return out_json
+    return device.__dict__
 
 
-print("----- main ------")
+# print("----- main ------")
 
 # t = deviceInfo("t1", "thermometer", None, 38, "C")
-# print(t.type, t.name, t.unit)
+# # print(t.type, t.name, t.unit)
 
-# t.set_measurements(111)
-# print(t.measurement)
-# print(t.measurementsTime)
+# # t.set_measurements(111)
+# # print(t.measurement)
+# # print(t.measurementsTime)
 
-status = status_code()
-out = read_data("a1b2c3", "device1.json", status)
-print(status.success, status.error)
-print(out)
+# status = status_code()
+# out = read_data("a1b2c3", "device1.json", status)
+# print(status.success, status.error)
+# print(out)
+

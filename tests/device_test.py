@@ -7,12 +7,15 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 from devices import deviceInfo, read_data, status_code
+from datetime import datetime
+
+now = datetime.now()
 
 # deviceInfo = {
 #                 "name": str, *
 #                 "type": str, *     Enum: [thermometer, bp_monitor, w_scale, glucose_meter, oximeter]
 #                 "serial_number: int,
-#                 "measurement": [int], 
+#                 "data": [int], 
 #                 "unit": str, *
 #                 "time_stamp": str
 #               }
@@ -80,3 +83,15 @@ def test_thermo_units():
     expected = ['Invalid units for device']
     
     assert expected == s6.error
+
+
+# Test - JSON input and output - compare 
+def test_json(): 
+    s7_1 = status_code()
+    s7_2 = status_code()
+    t7 = deviceInfo("t123", "thermometer", None, 33, "C")
+
+    out_json = read_data("a1b2c3", "device1.json", s7_1)
+    out_t7 = read_data("a1b2c3", t7, s7_2)
+
+    assert out_t7 == out_json
