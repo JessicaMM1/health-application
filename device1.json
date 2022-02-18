@@ -1,0 +1,7 @@
+{
+    "name": "thermo1",
+    "type": "thermometer",
+    "serial_number": 12345,
+    "data": 33,
+    "unit": "C"
+}
