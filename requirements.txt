@@ -3,3 +3,4 @@ coverage
 pytest >= 4.0
 flask
 flask_restful
+requests
