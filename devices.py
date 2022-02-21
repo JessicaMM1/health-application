@@ -77,9 +77,11 @@ def check_range(device):
     print(">> check_range ", device.type, device.unit, device.data)
 
     if device.data is None or type(device.data) is not int:
+        print("one")
         return False
     elif device.type == "thermometer":
         if device.unit == "C" and not 0 <= device.data <= 45:
+            print("two")
             return False
         elif device.unit == "F" and not 32 <= device.data <= 108.14:
             return False
@@ -177,6 +179,47 @@ def read_data(key, device, status):
     return device.__dict__
 
 
+def add_data(key, device_dict, file, status):
+    # 1. create device obj with given information
+    print("ADD DATA ",  device_dict, type(device_dict))
+    print(device_dict["name"])
+    device = deviceInfo(**device_dict)
+    print(device.type)
+    
+
+    # 2. verify information
+
+    if key not in keys:
+        status.success = False
+        status.error.append("Invalid key")
+
+    valid_device = valid_devices.get(device.type)    # returns device's units 
+    print(valid_device)
+
+    # check device type
+    if valid_device is None:
+        status.success = False
+        status.error.append("Invalid device type")
+
+    # check correct units for device
+    if valid_device is not None and device.unit not in valid_device:
+        status.success = False
+        status.error.append("Invalid units for device")
+
+    # check measurements range
+    if not check_range(device):
+        status.success = False
+        status.error.append("Invalid measurements")
+
+    device.set_time()
+
+    # 3. write to given filename as JSON
+    if status.success:
+        with open(file, "w") as write_file:
+            json.dump(device.__dict__, write_file, indent=4)     # dict type
+
+
+
 # print("----- main ------")
 
 # t = deviceInfo("t1", "thermometer", None, 38, "C")
@@ -187,6 +230,6 @@ def read_data(key, device, status):
 # # print(t.measurementsTime)
 
 # status = status_code()
-# out = read_data("a1b2c3", "device1.json", status)
+# out = read_data("a1b2c3", "device123.json", status)
 # print(status.success, status.error)
 # print(out)
