@@ -13,15 +13,15 @@ valid_types = ["text", "image", "video", "audio"]
 def create_message(recipient, type, content, status):
 
     if not isinstance(recipient,str):
-        status.message = "Invalid recipient type"
+        status.error.append("Invalid recipient type")
         return
     
     if type not in valid_types:
-        status.message = "Invalid message type"
+        status.error.append("Invalid message type")
         return
     
     if not isinstance(content, str):
-        status.message = "Invalid content type"
+        status.error.append("Invalid content type")
         return
 
     # verify url
@@ -55,6 +55,7 @@ def create_message(recipient, type, content, status):
 
 
 # status = status_code()
-# out = create_message("mary", "text", "Hello world!", status)
+# out = create_message(1213, "voice", "Hello world!", status)
 # print(out)
 # print(type(out))
+# print(status.error)
