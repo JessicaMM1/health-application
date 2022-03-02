@@ -35,7 +35,7 @@ The goal is to provide interfaces to third-party medical devices to feed measure
     | units (optional) | String | see code block |
     | serial number (optional) | Integer | |
 
-    ``` 
+    ``` python
     {
         "thermometer": ("C", "F"), 
         "bp_monitor": ("mmHg", "bpm"), 
@@ -71,11 +71,75 @@ The goal is to provide interfaces to third-party medical devices to feed measure
     - Invalid units for device
     - Invalid measurements
 
-#### Calendar
-#### Alerts
 #### Communications
     - Chat 
+    Send messages between system users. 
+
+    | Parameter | Type | Description |
+    |------|------|------| 
+    | recipient | str | Required. Account of recipient |
+    | message type | string | Required. Supported types: text, image, audio, video |
+    | content | string | Required. Body of message or url for media types |
+
+    JSON Output:
+
+    ``` python 
+    Text message
+    {
+        messageID: int
+        sender: str
+        recipient: str
+        date: str
+        time: str
+        message_type: str
+        body: str
+        previous_msg: int
+    }
+    
+    Media message
+    {
+        messageID: int
+        sender: str
+        recipient: str
+        date: str
+        time: str
+        message_type: str
+        url: str
+        previous_msg: int
+    }
+    ```
+
+    How to use:
+
+    Text messages
+
+    ``` python
+    {
+        "recipient": "user123",
+        "type": "text",
+        "body": "Hello world!"
+    }
+    ```
+
+    Media messages
+
+    ``` python
+    {
+        "recipient": "user123",
+        "type": "image",
+        "url": *"url-of-your-image"*,
+    }
+    ```
+
+    Error messages:
+    - No recipient
+    - Invalid message type
+    - Invalid url
+
     - Voice Transcriber
+
+#### Calendar
+#### Alerts
 #### Administrative
 #### Data Management
 #### User Interface
