@@ -26,44 +26,43 @@ The goal is to provide interfaces to third-party medical devices to feed measure
 
 ### Modules
 #### Device 
-    - To create a device `deviceInfo("device_type", "device_name", "units", "serial_number")`
 
-    | Parameter | Type | Options |
-    |------|------| ------- |
-    | device_type | String | see code block |
-    | device_name | String | |
-    | units (optional) | String | see code block |
-    | serial number (optional) | Integer | |
+- To create a device deviceInfo `("device_type", "device_name", "units", "serial_number")`
 
-    ``` 
-    {
-        "thermometer": ("C", "F"), 
-        "bp_monitor": ("mmHg", "bpm"), 
-        "w_scale": ("kgs", "lbs"), 
-        "glucose_meter": "mg/dL", 
-        "oximeter": ("SP02", "bpm"),
-    }
-    ```
-    - To add device measurements `set_measurements(measurement)`
+    | Parameter                | Type    | Description                                |
+    | ------------------------ | ------- | ------------------------------------------ |
+    | device_type              | String  | Required. Check list of supported devices. |
+    | device_name              | String  |                                            |
+    | units (optional)         | String  | Required. Check list of supported units.   |
+    | serial number (optional) | Integer |                                            |
 
-    | Parameter | Type |
-    |------|------| 
+    Supported device types and units:
+    - thermometer: ("C", "F") 
+    - w_scale: ("kgs", "lbs") 
+    - bp_monitor: ("mmHg", "bpm")
+    - glucose_meter: "mg/dL"
+    - oximeter: ("SP02", "bpm")
+  
+- To add device measurements `set_measurements(measurement)`
+
+    | Parameter   | Type    |
+    | ----------- | ------- |
     | measurement | Integer |
 
-    - To read data `read_data(key, device, status)`
+- To read data `read_data(key, device, status)`
 
-    | Parameter | Type |
-    |------|------| 
-    | key | String |
-    | device | deviceInfo (created previously) |
-    | status | status_code (created previously)| 
+    | Parameter | Type                             |
+    | --------- | -------------------------------- |
+    | key       | String                           |
+    | device    | deviceInfo (created previously)  |
+    | status    | status_code (created previously) |
 
-    - Status code `status_code()`
+- Status code `status_code()`
 
-    | Member | Type |
-    | ------ | ------ | 
-    | success | Bool |
-    | error | List of strings |
+    | Member  | Type            |
+    | ------- | --------------- |
+    | success | Bool            |
+    | error   | List of strings |
     
     Error messages:
     - Invalid key
