@@ -11,9 +11,9 @@ api = Api(app)
 device_put_args = reqparse.RequestParser()
 device_put_args.add_argument("name", type=str, help="Name is required", required=True)
 device_put_args.add_argument("type", type=str, help="Type is required", required=True)
-device_put_args.add_argument("serial_number", type=int, help="Data is required", required=True)
+device_put_args.add_argument("serial_number", type=int, help="Serial number is required", required=True)
 device_put_args.add_argument("data", type=int, help="Data is required", required=True)
-device_put_args.add_argument("unit", type=str, help="Data is required", required=True)
+device_put_args.add_argument("unit", type=str, help="Unit is required", required=True)
 
 
 class DeviceAPI(Resource):
