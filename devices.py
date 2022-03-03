@@ -148,6 +148,7 @@ def read_data(key, device, status):
     if key not in keys:
         status.success = False
         status.error.append("Invalid key")
+        return
 
     valid_device = valid_devices.get(device.type)    # returns device's units 
     print(valid_device)
