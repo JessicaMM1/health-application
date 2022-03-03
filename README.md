@@ -73,15 +73,15 @@ Examples:
   }  
   ```
 
-### Communications
-    - Chat 
-    Send messages between system users. 
+### Chat
+
+- Send messages between system users. 
 
     | Parameter | Type | Description |
     |------|------|------| 
-    | recipient | str | Required. Account of recipient |
-    | message type | string | Required. Supported types: text, image, audio, video |
-    | content | string | Required. Body of message or url for media types |
+    | recipient | String | Required. Account of recipient |
+    | message type | String | Required. Supported types: text, image, audio, video |
+    | content | String | Required. Body of message or url for media types |
 
     JSON Output:
 
@@ -137,8 +137,6 @@ Examples:
     - No recipient
     - Invalid message type
     - Invalid url
-
-    - Voice Transcriber
 
 #### Calendar
 #### Alerts
