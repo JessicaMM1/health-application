@@ -4,7 +4,7 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from devices import add_data, status_code, read_data
 
-app = Flask("DeviceAPI")
+app = Flask(__name__)
 api = Api(app)
 
 # Required arguments
@@ -38,7 +38,7 @@ class DeviceAPI(Resource):
             return status_put.error, 400     # bad request
 
 
-api.add_resource(DeviceAPI,"/<string:key>/<string:file>")
+api.add_resource(DeviceAPI,"/devices/<string:key>/<string:file>")
 
 if __name__ == '__main__':
     app.run(debug=True)
