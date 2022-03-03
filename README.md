@@ -1,4 +1,4 @@
-# health-application
+# Health Application
 
 Jessica Martinez Marquez
 
@@ -24,61 +24,63 @@ The goal is to provide interfaces to third-party medical devices to feed measure
 - Developers
     - access anonymized data 
 
-### Modules
-- Device 
-    - To create a device `deviceInfo("device_type", "device_name", *"units"*, *"serial_number"*)`
+## Modules
+### Device `/devices`
 
-    | Parameter | Type | Options |
-    |------|------| ------- |
-    | device_type | String | see code block |
-    | device_name | String | |
-    | units (optional) | String | see code block |
-    | serial number (optional) | Integer | |
+`https://health-app-2022.ue.r.appspot.com/`
 
-    ``` 
-    {
-        "thermometer": ("C", "F"), 
-        "bp_monitor": ("mmHg", "bpm"), 
-        "w_scale": ("kgs", "lbs"), 
-        "glucose_meter": "mg/dL", 
-        "oximeter": ("SP02", "bpm"),
-    }
-    ```
-    - To add device measurements `set_measurements(measurement)`
+- To read device data `(key, filename)`
 
-    | Parameter | Type |
-    |------|------| 
-    | measurement | Integer |
+    | Parameter | Description       |
+    | --------- | ----------------- |
+    | key       | String            |
+    | filename  | JSON file (.json) |
+  
 
-    - To read data `read_data(key, device, status)`
+- To create a device `(device_type, device_name, units, serial_number)`
 
-    | Parameter | Type |
-    |------|------| 
-    | key | String |
-    | device | deviceInfo (created previously) |
-    | status | status_code (created previously)| 
+    | Parameter     | Type    | Description                                |
+    | ------------- | ------- | ------------------------------------------ |
+    | device_type   | String  | Required. Check list of supported devices. |
+    | device_name   | String  | Required                                   |
+    | units         | String  | Required. Check list of supported units.   |
+    | data          | Integer | Required                                   |
+    | serial number | Integer | Optional                                   |
 
-    - Status code `status_code()`
+    Supported device types and units:
+    - thermometer: ("C", "F") 
+    - w_scale: ("kgs", "lbs") 
+    - bp_monitor: ("mmHg", "bpm")
+    - glucose_meter: "mg/dL"
+    - oximeter: ("SP02", "bpm")
+ 
+Error messages:
+  - Invalid key
+  - Invalid device type
+  - Invalid units for device
+  - Invalid measurements
 
-    | Member | Type |
-    | ------ | ------ | 
-    | success | Bool |
-    | error | List of strings |
-    
-        - Error messages:
-            - Invalid key
-            - Invalid device type
-            - Invalid units for device
-            - Invalid measurements
+Examples:
+- Read data `/devices/<key>/<filename>`
+  ```python
+  {
+    "name": "thermo1", 
+    "type": "thermometer", 
+    "serial_number": 12345, 
+    "data": 33, 
+    "unit": "C", 
+    "time_stamp": "date_and_time"
+  }  
+  ```
 
-- Calendar
-- Alerts
-- Communications
+#### Calendar
+#### Alerts
+#### Communications
     - Chat 
     - Voice Transcriber
-- Administrative
-- Data Management
-- User Interface
+#### Administrative
+#### Data Management
+#### User Interface
 
 ## Branching Strategy
 Each module is considered a feature. So, the branching strategy is the following:
