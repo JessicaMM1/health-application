@@ -1,0 +1,111 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Doctor",
+    "definitions": {
+        "Doctor": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "userInfo": {
+                    "$ref": "#/definitions/UserInfo"
+                },
+                "role": {
+                    "type": "string",
+                    "pattern": "doctor$"
+                },
+                "patients": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "userInfo",
+                "role",
+                "patients"
+            ],
+            "title": "Doctor"
+        },
+        "Patient": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "userInfo": {
+                    "$ref": "#/definitions/UserInfo"
+                },
+                "role": {
+                    "type": "string",
+                    "pattern": "patient$"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "DOB": {
+                    "type": "string"
+                },
+                "assigned_doctor": {
+                    "type": "string"
+                },
+                "devices": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "medical_info": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MedicalInfo"
+                    }
+                }
+            },
+            "required": [
+                "userInfo",
+                "role",
+                "DOB",
+                "assigned_doctor",
+                "medical_info"
+            ],
+            "title": "Patient"
+        },
+        "MedicalInfo": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "medications": {
+                    "type": "string"
+                },
+                "illnesses": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "illnesses",
+                "medications"
+            ],
+            "title": "MedicalInfo"
+        },
+        "UserInfo": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "userID": {
+                    "type": "integer"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "first_name",
+                "last_name",
+                "userID"
+            ],
+            "title": "UserInfo"
+        }
+    }
+}
