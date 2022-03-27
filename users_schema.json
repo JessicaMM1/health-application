@@ -1,18 +1,52 @@
 {
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "$ref": "#/definitions/Doctor",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "basicInfo": {
+            "$ref": "#/definitions/BasicInfo"
+        },
+        "role": {
+            "type": "string",
+            "enum": [
+                "doctor",
+                "patient"
+            ]
+        },
+        "attributes": {
+            "type": "object"
+        }
+    },
+    "required": [
+        "role",
+        "basicInfo"
+    ],
+    "if": {
+        "properties": {
+            "role": {
+                "const": "doctor"
+            }
+        }
+    },
+    "then": {
+        "properties": {
+            "attributes": {
+                "$ref": "#/definitions/Doctor"
+            }
+        }
+    },
+    "else": {
+        "properties": {
+            "attributes": {
+                "$ref": "#/definitions/Patient"
+            }
+        }
+    },
     "definitions": {
         "Doctor": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "userInfo": {
-                    "$ref": "#/definitions/UserInfo"
-                },
-                "role": {
-                    "type": "string",
-                    "pattern": "doctor$"
-                },
                 "patients": {
                     "type": "array",
                     "items": {
@@ -21,8 +55,6 @@
                 }
             },
             "required": [
-                "userInfo",
-                "role",
                 "patients"
             ],
             "title": "Doctor"
@@ -31,13 +63,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "userInfo": {
-                    "$ref": "#/definitions/UserInfo"
-                },
-                "role": {
-                    "type": "string",
-                    "pattern": "patient$"
-                },
                 "gender": {
                     "type": "string"
                 },
@@ -61,8 +86,6 @@
                 }
             },
             "required": [
-                "userInfo",
-                "role",
                 "DOB",
                 "assigned_doctor",
                 "medical_info"
@@ -73,20 +96,20 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "medications": {
+                "medication": {
                     "type": "string"
                 },
-                "illnesses": {
+                "illness": {
                     "type": "string"
                 }
             },
             "required": [
-                "illnesses",
-                "medications"
+                "illness",
+                "medication"
             ],
             "title": "MedicalInfo"
         },
-        "UserInfo": {
+        "BasicInfo": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -105,7 +128,7 @@
                 "last_name",
                 "userID"
             ],
-            "title": "UserInfo"
+            "title": "BasicInfo"
         }
     }
 }
