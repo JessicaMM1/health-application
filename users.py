@@ -1,5 +1,5 @@
 # User Module
-from jsonschema import Draft6Validator
+from jsonschema import Draft7Validator
 import json
 import uuid
 
@@ -39,10 +39,10 @@ class Patient(User):
         super().__init__(first_name, last_name, role)
 
         self.dob = None
-        #self.age = None  # Would be better to calculate it
-        self.medical_info = None
         self.my_doctor = None
-        self.my_devices = None
+        #self.age = None  # Would be better to calculate it
+        self.medical_info = []
+        self.my_devices = []
        
 
 class UserFactory:
@@ -76,26 +76,82 @@ class UserFactory:
 # user_doc.add_patient(user_patient1)
 # user_doc.add_patient(user_patient2)
 
-# test = {
-#         "userInfo": {
+test = {
+        "basicInfo": {
+            "userID": 123,
+            "first_name": "Juana",
+            "last_name": "Banana"
+        },
+        "role": "patient",
+        "attributes": {
+            "DOB": "232",
+            "assigned_doctor": "juana",
+            "medical_info": [
+                {
+                    "illness": "None",
+                    "medication": "vitamin c"
+                },
+                {
+                    "illness": "covid",
+                    "medication": "rest"
+                }
+            ]
+        }       
+}
+
+# *** VALID patient JSON ***
+# {
+#     "basicInfo": {
+#         "userID": 123,
+#         "first_name": "Juana",
+#         "last_name": "Banana"
+#     },
+#     "role": "patient",
+#     "attributes": {
+#         "DOB": "232",
+#         "assigned_doctor": "juana",
+#         "medical_info": [
+#             {   
+#                 "illness": "None",
+#                 "medication": "vitamin c"
+#             },
+#             {
+#                 "illness": "covid",
+#                 "medication": "rest"
+#             }
+#         ]
+#     }       
+# }
+
+
+# *** VALID doctor JSON***
+# {
+#         "basicInfo": {
 #             "userID": 123,
 #             "first_name": "Juana",
 #             "last_name": "Banana"
 #         },
-#         "role": "doctorssss"
-
+#         "role": "doctor",
+#         "attributes": {
+#             "patients": ["343", "123"]
+#         }
+        
 # }
 
-# with open("users_schema.json", "r") as f:
-#     schema = json.load(f)
-#     # print(schema)
-#     # Draft6Validator.check_schema(schema)
-#     # Draft6Validator.check_schema(json.load(open("users_schema.json")))
 
-# validator = Draft6Validator(schema)
-# print(list(validator.iter_errors(test)))
 
-# Draft6Validator(schema).validate(test)
+with open("users_schema.json", "r") as f:
+    schema = json.load(f)
+    # print(schema)
+    Draft7Validator.check_schema(schema)
+    # Draft6Validator.check_schema(json.load(open("users_schema.json")))
+
+validator = Draft7Validator(schema)
+print(list(validator.iter_errors(test)))
+
+# Draft7Validator(schema).validate(test)
+
+
 #     Draft6Validator.check_schema(f)
 
 
