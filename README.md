@@ -73,11 +73,73 @@ Examples:
   }  
   ```
 
+### Chat
+
+- Send messages between system users. 
+
+    | Parameter | Type | Description |
+    |------|------|------| 
+    | recipient | String | Required. Account of recipient |
+    | message type | String | Required. Supported types: text, image, audio, video |
+    | content | String | Required. Body of message or url for media types |
+
+    JSON Output:
+
+    ```python 
+    Text message
+    {
+        messageID: int
+        sender: str
+        recipient: str
+        date: str
+        time: str
+        message_type: str
+        body: str
+        previous_msg: int
+    }
+    
+    Media message
+    {
+        messageID: int
+        sender: str
+        recipient: str
+        date: str
+        time: str
+        message_type: str
+        url: str
+        previous_msg: int
+    }
+    ```
+
+    How to use:
+
+    Text messages
+
+    ```python
+    {
+        "recipient": "user123",
+        "type": "text",
+        "body": "Hello world!"
+    }
+    ```
+
+    Media messages
+
+    ```python
+    {
+        "recipient": "user123",
+        "type": "image",
+        "url": "url-of-your-image",
+    }
+    ```
+
+    Error messages:
+    - No recipient
+    - Invalid message type
+    - Invalid url
+
 #### Calendar
 #### Alerts
-#### Communications
-    - Chat 
-    - Voice Transcriber
 #### Administrative
 #### Data Management
 #### User Interface
