@@ -64,12 +64,12 @@ def test_thermo_F():
     assert expected == s4.error
 
 
-# Test 4 
+# Test 4 - modified 
 def test_multiple_errors():
     s5 = status_code()
     t5 = deviceInfo("BMI_1", "bmi_monitor", None, None, None)
     read_data("a1b2c3123456", t5, s5)
-    expected = ['Invalid key', 'Invalid device type', 'Invalid measurements']
+    expected = ['Invalid key']
 
     assert expected == s5.error
 

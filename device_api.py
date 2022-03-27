@@ -4,16 +4,16 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from devices import add_data, status_code, read_data
 
-app = Flask("DeviceAPI")
+app = Flask(__name__)
 api = Api(app)
 
 # Required arguments
 device_put_args = reqparse.RequestParser()
 device_put_args.add_argument("name", type=str, help="Name is required", required=True)
 device_put_args.add_argument("type", type=str, help="Type is required", required=True)
-device_put_args.add_argument("serial_number", type=int, help="Data is required", required=True)
+device_put_args.add_argument("serial_number", type=int, help="Serial number is required", required=True)
 device_put_args.add_argument("data", type=int, help="Data is required", required=True)
-device_put_args.add_argument("unit", type=str, help="Data is required", required=True)
+device_put_args.add_argument("unit", type=str, help="Unit is required", required=True)
 
 
 class DeviceAPI(Resource):
@@ -38,7 +38,7 @@ class DeviceAPI(Resource):
             return status_put.error, 400     # bad request
 
 
-api.add_resource(DeviceAPI,"/<string:key>/<string:file>")
+api.add_resource(DeviceAPI,"/devices/<string:key>/<string:file>")
 
 if __name__ == '__main__':
     app.run(debug=True)
