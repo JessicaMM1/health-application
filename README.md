@@ -6,7 +6,10 @@ Jessica Martinez Marquez
 Health platform to monitor patients' medical measurements and vital signs at home or in hospitals using third-party devices.
 The goal is to provide interfaces to third-party medical devices to feed measurement readings into the system.
 
-### Users & User Stories
+The platform has a cross-platform mobile user interface where patients can check and chat their doctors and nurses, and medical staff can register patients and modify their information. Check the [mobile app repository](https://github.com/JessicaMM1/health-mobile)
+
+
+### User Stories
 - Patients
     - input device readings into system
     - schedule appointments with their health provider
@@ -77,11 +80,11 @@ Examples:
 
 - Send messages between system users. 
 
-    | Parameter | Type | Description |
-    |------|------|------| 
-    | recipient | String | Required. Account of recipient |
+    | Parameter    | Type   | Description                                          |
+    | ------------ | ------ | ---------------------------------------------------- |
+    | recipient    | String | Required. Account of recipient                       |
     | message type | String | Required. Supported types: text, image, audio, video |
-    | content | String | Required. Body of message or url for media types |
+    | content      | String | Required. Body of message or url for media types     |
 
     JSON Output:
 
